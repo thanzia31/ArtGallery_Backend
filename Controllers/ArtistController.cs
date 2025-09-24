@@ -105,30 +105,39 @@ namespace ArtGallery_Backend.Controllers
                 }
             }
 
-            var art = new Art
-            {
-                ArtistId = artDto.ArtistId,
-                Title = artDto.Title,
-                Description = artDto.Description,
-                CategoryId = artDto.CategoryId,
-                Mode = artDto.Mode,
-                Image = imageBytes,
-                Reported = false,
-                views = 0,
-                CreatedAt = DateTime.Now
-            };
+              var art = new Art
+    {
+        ArtistId = artDto.ArtistId,
+        Title = artDto.Title,
+        Description = artDto.Description,
+        CategoryId = artDto.CategoryId,
+        Mode = artDto.Mode,
+        Image = imageBytes,
+        Reported = false,
+        views = 0,
+        CreatedAt = DateTime.Now
+    };
 
-            try
-            {
-                await _artistService.AddArt(art);
-                return Ok(new { message = "Art added successfully" });
+    try
+    {
+        // Save art
+        await _artistService.AddArt(art);
 
+        // If galleries selected, add art to those galleries
+        if (artDto.GalleryIds != null && artDto.GalleryIds.Any())
+        {
+            foreach (var gallery in artDto.GalleryIds)
+            {
+                await _artistService.AddArtToGallery(gallery.GalleryId, art.ArtId, gallery.GalleryName);
             }
-            catch (Exception ex)
-            {
+        }
 
-                return StatusCode(500, "Server error: " + ex.Message);
-            }
+        return Ok(new { message = "Art added successfully" });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, "Server error: " + ex.Message);
+    }
         }
         [Authorize]
         [HttpDelete("deleteArt/{ArtId}")]
@@ -190,6 +199,7 @@ namespace ArtGallery_Backend.Controllers
         {
             try
             {
+                
 
                 var result = await _artistService.AddArtToGallery(gal.GalleryId, gal.ArtId, gal.GalleryName);
 

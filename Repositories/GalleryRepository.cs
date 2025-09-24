@@ -71,6 +71,11 @@ namespace ArtGallery_Backend.Repositories
                 GalleryName = GalleryName,
                 AddedAt = DateTime.Now
             };
+             var gallery = await _context.Gallery.FirstOrDefaultAsync(g => g.GalleryId == GalleryId);
+            if (gallery != null)
+            {
+                gal.GalleryName = gallery.GalleryName;
+            }
             _context.Gallery.Add(gal);
             await _context.SaveChangesAsync();
             return true;

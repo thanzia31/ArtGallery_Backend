@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ArtGallery_Backend.Model.Domain;
 
 namespace ArtGallery_Backend.Model.DTO
 {
@@ -24,6 +25,8 @@ namespace ArtGallery_Backend.Model.DTO
 
         [Required]
         public string Image { get; set; }
+
+        public List<GalleryDTO>? GalleryIds { get; set; }
 
 
 

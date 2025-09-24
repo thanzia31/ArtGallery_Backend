@@ -36,5 +36,8 @@ namespace ArtGallery_Backend.Model.Domain
         public DateTime CreatedAt { get; set; }
 
 
+
+
+
     }
 }

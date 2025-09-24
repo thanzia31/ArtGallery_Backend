@@ -88,3 +88,4 @@ D:\ILINK\DEX\ArtGallery\Backend\ArtGallery_Backend\bin\Debug\net8.0\runtimes\bro
 D:\ILINK\DEX\ArtGallery\Backend\ArtGallery_Backend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\ILINK\DEX\ArtGallery\Backend\ArtGallery_Backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\ILINK\DEX\ArtGallery\Backend\ArtGallery_Backend\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\ILINK\DEX\ArtGallery\Backend\ArtGallery_Backend\obj\Debug\net8.0\ArtGallery_Backend.sourcelink.json
