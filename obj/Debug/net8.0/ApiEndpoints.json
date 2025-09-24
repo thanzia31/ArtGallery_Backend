@@ -1,0 +1,244 @@
+[
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "AddArt",
+    "RelativePath": "addArt",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "artDto",
+        "Type": "ArtGallery_Backend.Model.DTO.ArtDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "AddArtToGallery",
+    "RelativePath": "addArtToGallery",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gal",
+        "Type": "ArtGallery_Backend.Model.DTO.GalleryDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "DeleteArt",
+    "RelativePath": "deleteArt/{ArtId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ArtId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "DeleteArtFromGallery",
+    "RelativePath": "deleteArtFromGallery",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ArtId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "GalleryId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "DeleteGallery",
+    "RelativePath": "deleteGallery/{GalleryId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "GalleryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.AdminController",
+    "Method": "DeleteUser",
+    "RelativePath": "deleteUser/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "DislikeArt",
+    "RelativePath": "dislike/{artId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "artId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "getArts",
+    "RelativePath": "getArts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.AdminController",
+    "Method": "getUsers",
+    "RelativePath": "getUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "LikeArt",
+    "RelativePath": "like/{artId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "artId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDto",
+        "Type": "ArtGallery_Backend.Model.DTO.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.LoginController",
+    "Method": "Logout",
+    "RelativePath": "logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.LoginController",
+    "Method": "RefreshToken",
+    "RelativePath": "refresh",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.AdminController",
+    "Method": "AddUser",
+    "RelativePath": "register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userDto",
+        "Type": "ArtGallery_Backend.Model.DTO.UserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.AdminController",
+    "Method": "SetPassword",
+    "RelativePath": "set-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "ArtGallery_Backend.Model.DTO.SetPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ArtGallery_Backend.Controllers.ArtistController",
+    "Method": "UpdateArt",
+    "RelativePath": "updateArt/{ArtId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ArtId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "artDto",
+        "Type": "ArtGallery_Backend.Model.DTO.ArtDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
