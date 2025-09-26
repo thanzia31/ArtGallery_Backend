@@ -19,6 +19,12 @@ namespace ArtGallery_Backend.Repositories
         {
             return await _context.Gallery.ToListAsync();
         }
+        public async Task<List<Gallery>> GetGalleryById(int galleryId)
+        {
+            return await _context.Gallery
+                .Where(g => g.GalleryId == galleryId)
+                .ToListAsync();
+        }
 
         public async Task<List<Gallery>> GetGalleryForUser(int currentUserId)
         {
@@ -81,6 +87,47 @@ namespace ArtGallery_Backend.Repositories
             return true;
         }
 
+        public async Task<bool> AddMultiArtToGallery(int GalleryId, List<int> ArtIds, string GalleryName)
+        {
+            var existingGal = await _context.Gallery
+                .FirstOrDefaultAsync(g => g.GalleryId == GalleryId);
+
+            if (existingGal != null && existingGal.GalleryName != GalleryName)
+            {
+                throw new Exception("Gallery Name Mismatch");
+            }
+
+            bool anyAdded = false;
+
+            foreach (var artId in ArtIds)
+            {
+                // Check if this art is already in the gallery
+                var existingArt = await _context.Gallery
+                    .FirstOrDefaultAsync(g => g.GalleryId == GalleryId && g.ArtId == artId);
+
+                if (existingArt != null)
+                    continue; // Skip duplicates
+
+                var gal = new Gallery
+                {
+                    GalleryId = GalleryId,
+                    ArtId = artId,
+                    GalleryName = existingGal?.GalleryName ?? GalleryName,
+                    AddedAt = DateTime.Now
+                };
+
+                _context.Gallery.Add(gal);
+                anyAdded = true;
+            }
+
+            if (anyAdded)
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            return anyAdded;
+        }
+
         public async Task DeleteArtFromGallery(int ArtId, int GalleryId)
         {
             var gal = await _context.Gallery.FirstOrDefaultAsync(u => u.GalleryId == GalleryId && u.ArtId == ArtId);
@@ -101,7 +148,7 @@ namespace ArtGallery_Backend.Repositories
             }
         }
 
-     public async Task<Gallery> CreateGallery(string galleryName, int artId)
+    public async Task<List<Gallery>> CreateGallery(string galleryName, List<int> artIds)
 {
     // Step 1: Get next GalleryId
     var lastGalleryId = _context.Gallery.Any()
@@ -110,21 +157,21 @@ namespace ArtGallery_Backend.Repositories
 
     int newGalleryId = lastGalleryId + 1;
 
-    // Step 2: Insert first row
-    var gallery = new Gallery
+    // Step 2: Create a list of Gallery entries (one per artId)
+    var galleries = artIds.Select(artId => new Gallery
     {
         GalleryId = newGalleryId,
         GalleryName = galleryName,
         ArtId = artId,
         AddedAt = DateTime.UtcNow
-    };
+    }).ToList();
 
-    _context.Gallery.Add(gallery);
+    // Step 3: Insert all rows in one go
+    _context.Gallery.AddRange(galleries);
     await _context.SaveChangesAsync();
 
-    return gallery;
+    return galleries;
 }
-
 
     }
 }

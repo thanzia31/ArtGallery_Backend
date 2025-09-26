@@ -105,39 +105,39 @@ namespace ArtGallery_Backend.Controllers
                 }
             }
 
-              var art = new Art
-    {
-        ArtistId = artDto.ArtistId,
-        Title = artDto.Title,
-        Description = artDto.Description,
-        CategoryId = artDto.CategoryId,
-        Mode = artDto.Mode,
-        Image = imageBytes,
-        Reported = false,
-        views = 0,
-        CreatedAt = DateTime.Now
-    };
-
-    try
-    {
-        // Save art
-        await _artistService.AddArt(art);
-
-        // If galleries selected, add art to those galleries
-        if (artDto.GalleryIds != null && artDto.GalleryIds.Any())
-        {
-            foreach (var gallery in artDto.GalleryIds)
+            var art = new Art
             {
-                await _artistService.AddArtToGallery(gallery.GalleryId, art.ArtId, gallery.GalleryName);
-            }
-        }
+                ArtistId = artDto.ArtistId,
+                Title = artDto.Title,
+                Description = artDto.Description,
+                CategoryId = artDto.CategoryId,
+                Mode = artDto.Mode,
+                Image = imageBytes,
+                Reported = false,
+                views = 0,
+                CreatedAt = DateTime.Now
+            };
 
-        return Ok(new { message = "Art added successfully" });
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(500, "Server error: " + ex.Message);
-    }
+            try
+            {
+                // Save art
+                await _artistService.AddArt(art);
+
+                // If galleries selected, add art to those galleries
+                if (artDto.GalleryIds != null && artDto.GalleryIds.Any())
+                {
+                    foreach (var gallery in artDto.GalleryIds)
+                    {
+                        await _artistService.AddArtToGallery(gallery.GalleryId, art.ArtId, gallery.GalleryName);
+                    }
+                }
+
+                return Ok(new { message = "Art added successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Server error: " + ex.Message);
+            }
         }
         [Authorize]
         [HttpDelete("deleteArt/{ArtId}")]
@@ -199,7 +199,7 @@ namespace ArtGallery_Backend.Controllers
         {
             try
             {
-                
+
 
                 var result = await _artistService.AddArtToGallery(gal.GalleryId, gal.ArtId, gal.GalleryName);
 
@@ -215,6 +215,29 @@ namespace ArtGallery_Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("addMultiArtToGallery")]
+        public async Task<IActionResult> AddMultiArtToGallery([FromBody] GalleryMultiDTO gal)
+        {
+            try
+            {
+
+
+                var result = await _artistService.AddMultiArtToGallery(gal.GalleryId, gal.ArtIds, gal.GalleryName);
+
+                if (!result)
+                {
+                    return Conflict(new { message = "An art selected is already present in the gallery." });
+                }
+
+                return Ok(new { message = "Arts added to gallery successfully." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [Authorize]
         [HttpDelete("deleteArtFromGallery")]
         public async Task<IActionResult> DeleteArtFromGallery([FromQuery] int ArtId, [FromQuery] int GalleryId)
@@ -236,7 +259,7 @@ namespace ArtGallery_Backend.Controllers
             try
             {
                 await _artistService.DeleteGallery(GalleryId);
-                return Ok("Gallery deleted successfully.");
+                return Ok(new { message = "Gallery deleted successfully." });
             }
             catch (Exception ex)
             {
@@ -330,27 +353,50 @@ namespace ArtGallery_Backend.Controllers
             return value;
         }
 
-       [Authorize]
-[HttpPost("createGallery")]
-public async Task<IActionResult> CreateGallery([FromBody] CreateGalleryDTO dto)
-{
-    if (string.IsNullOrWhiteSpace(dto.GalleryName) || dto.ArtId <= 0)
-        return BadRequest("Gallery name and ArtId are required");
+        [Authorize]
+        [HttpPost("createGallery")]
+        public async Task<IActionResult> CreateGallery([FromBody] CreateGalleryDTO dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.GalleryName) || dto.ArtIds == null || !dto.ArtIds.Any())
+                return BadRequest("Gallery name and ArtId are required");
 
+            try
+            {
+                var gallery = await _artistService.CreateGallery(dto.GalleryName, dto.ArtIds);
+                return Ok(new
+                {
+                    message = "Gallery created successfully",
+                    gallery
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error creating gallery: " + ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getGalleryById/{galleryId}")]
+public async Task<IActionResult> GetGalleryById(int galleryId)
+{
     try
     {
-        var gallery = await _artistService.CreateGallery(dto.GalleryName, dto.ArtId);
-        return Ok(new
+        var gallery = await _artistService.GetGalleryById(galleryId);
+
+        if (gallery == null || !gallery.Any())
         {
-            message = "Gallery created successfully",
-            gallery
-        });
+            return NotFound(new { message = "Gallery not found" });
+        }
+
+        return Ok(gallery);
     }
     catch (Exception ex)
     {
-        return StatusCode(500, "Error creating gallery: " + ex.Message);
+        return StatusCode(500, new { message = "Error fetching gallery", error = ex.Message });
     }
-}      
+}
+
+       
     }
 } 
 

@@ -23,14 +23,14 @@ namespace ArtGallery_Backend.Repositories
         {
             return await _context.Art.FirstOrDefaultAsync(a => a.ArtId == artId);
         }
-         public async Task<List<Art>> getMyArt(int userId)
+        public async Task<List<Art>> getMyArt(int userId)
         {
-            return await _context.Art.Where(a=> a.ArtistId == userId).ToListAsync();
+            return await _context.Art.Where(a => a.ArtistId == userId).ToListAsync();
         }
 
-         public async Task<List<Art>> getOtherArt(int userId)
+        public async Task<List<Art>> getOtherArt(int userId)
         {
-            return await _context.Art.Where(a=> a.ArtistId != userId).ToListAsync();
+            return await _context.Art.Where(a => a.ArtistId != userId).ToListAsync();
         }
 
         public async Task<List<Art>> getOtherRecentArt(int userId)
@@ -79,10 +79,22 @@ namespace ArtGallery_Backend.Repositories
             Console.WriteLine(art);
             if (art == null) return false;
 
-            art.Reported = true;  
+            art.Reported = true;
             await _context.SaveChangesAsync();
             return true;
 
         }
+
+        public async Task AddViews(int artId)
+        {
+            var art = await _context.Art.FindAsync(artId);
+            if (art == null)
+            return;
+            art.views += 1;
+
+            await _context.SaveChangesAsync();
+        }
+
+       
     }
 }

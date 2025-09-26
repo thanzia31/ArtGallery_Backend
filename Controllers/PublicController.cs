@@ -93,5 +93,14 @@ namespace ArtGallery_Backend.Controllers
             var count = await _publicService.LikeCount(artId);
             return count;
         }
+         [HttpPost("addviews")]
+        public async Task<IActionResult> AddViews([FromBody] int artId)
+        {
+            await _publicService.AddViews(artId);
+            return Ok(new { message = "View added Successfully" });
+        }
+
+      
+        
     }
 }

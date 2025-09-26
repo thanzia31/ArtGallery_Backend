@@ -38,6 +38,7 @@ namespace ArtGallery_Backend.Services
 
         public Task<bool> AddArtToGallery(int GalleryId, int ArtId, string GalleryName) => _galleryRepository.AddArtToGallery(GalleryId, ArtId, GalleryName);
 
+        public Task<bool> AddMultiArtToGallery(int GalleryId, List<int> ArtId, string GalleryName) => _galleryRepository.AddMultiArtToGallery(GalleryId, ArtId, GalleryName);
         public Task DeleteArtFromGallery(int GalleryId, int ArtId) => _galleryRepository.DeleteArtFromGallery(GalleryId, ArtId);
 
         public Task DeleteGallery(int GalleryId) => _galleryRepository.DeleteGallery(GalleryId);
@@ -58,7 +59,11 @@ namespace ArtGallery_Backend.Services
 
         public Task<User> GetUserById(int userId) => _userRepository.GetUserById(userId);
 
-        public Task<Gallery> CreateGallery(string galleryName, int artId) => _galleryRepository.CreateGallery(galleryName, artId);
+        public Task<List<Gallery>> CreateGallery(string galleryName, List<int> artId) => _galleryRepository.CreateGallery(galleryName, artId);
+
+        public Task<List<Gallery>> GetGalleryById(int galId) => _galleryRepository.GetGalleryById(galId);
+
+       
 
         
     }

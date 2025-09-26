@@ -10,6 +10,7 @@ namespace ArtGallery_Backend.Services
         private readonly GalleryRepository _galleryrepository;
         private readonly ArtRepository _artrepository;
         private readonly FavouritesRepository _favouritesrepository;
+        
 
         public PublicService(ArtCategoryRepository artcategoryrepositiory, GalleryRepository galleryrepository, ArtRepository artrepository, FavouritesRepository favouritesrepository)
         {
@@ -29,8 +30,8 @@ namespace ArtGallery_Backend.Services
         public Task<List<Art>> GetOtherArt(int userId) => _artrepository.getOtherArt(userId);
 
         public Task<int> LikeCount(int artId) => _favouritesrepository.likeCount(artId);
-
-
+         public Task AddViews(int artId) => _artrepository.AddViews(artId);
+        
 
     }
 }
